@@ -6,7 +6,10 @@ require("dotenv").config({ path: __dirname + "/../.env" });
 
 const HASURA_GRAPHQL_ADMIN_SECRET = process.env.HASURA_GRAPHQL_ADMIN_SECRET;
 
-let url = process.env.HASURA_GRAPHQL_URL;
+let url = `${process.env.HASURA_GRAPHQL_URL}?_=${new Date().getTime()}`;
+url = `${process.env.HASURA_GRAPHQL_URL}`;
+
+console.log(url);
 
 let settings = {
   method: "Get",
@@ -25,10 +28,12 @@ let settings = {
 //     driveSpaceData = json.server_space_latest_data;
 //   });
 
-const driveSpaceData = fetch(url,settings).json().server_space_latest_data;
+const driveSpaceData = fetch(url, settings).json().server_space_latest_data;
 
 /* GET home page. */
 router.get("/", function (req, res, next) {
+  res.set("Cache-Control", "no-cache");
+  res.set("Pragma", "no-cache");
   res.render("index", { title: "Drive Space", driveSpaceData });
 });
 
