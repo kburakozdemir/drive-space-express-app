@@ -1,5 +1,7 @@
 # Notes
 
+Visit [this url](https://nodetestexpress.azurewebsites.net/) to see the app.
+
 ```bash
 # Node v16.13.2
 npm install
