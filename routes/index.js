@@ -1,17 +1,14 @@
 var express = require("express");
 var router = express.Router();
-var fetch = require("sync-fetch");
+var fetch = require("node-fetch");
 
 require("dotenv").config({ path: __dirname + "/../.env" });
 
 const HASURA_GRAPHQL_ADMIN_SECRET = process.env.HASURA_GRAPHQL_ADMIN_SECRET;
 
-let url = `${process.env.HASURA_GRAPHQL_URL}?_=${new Date().getTime()}`;
-url = `${process.env.HASURA_GRAPHQL_URL}`;
+const url = `${process.env.HASURA_GRAPHQL_URL}`;
 
-console.log(url);
-
-let settings = {
+const options = {
   method: "Get",
   headers: {
     "Content-Type": "application/json",
@@ -19,21 +16,19 @@ let settings = {
   },
 };
 
-// let driveSpaceData = "";
-
-// fetch(url, settings)
-//   .then((res) => res.json())
-//   .then((json) => {
-//     // do something with JSON
-//     driveSpaceData = json.server_space_latest_data;
-//   });
-
-const driveSpaceData = fetch(url, settings).json().server_space_latest_data;
-
 /* GET home page. */
-router.get("/", function (req, res, next) {
-  res.set("Cache-Control", "no-cache");
-  res.set("Pragma", "no-cache");
+router.get("/", async (req, res, next) => {
+  const fetchAPI = await fetch(url, options);
+  const fetchAPIResponse = await fetchAPI.json();
+  const driveSpaceData = fetchAPIResponse.server_space_latest_data;
+
+  driveSpaceData.sort((a, b) => {
+    return (
+      a.server_name.localeCompare(b.server_name) ||
+      a.server_location.localeCompare(b.server_location)
+    );
+  });
+
   res.render("index", { title: "Drive Space", driveSpaceData });
 });
 
