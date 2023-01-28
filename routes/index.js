@@ -22,16 +22,19 @@ router.get("/", async (req, res, next) => {
   const fetchAPIResponse = await fetchAPI.json();
   let driveSpaceData = fetchAPIResponse.server_space_latest_data;
 
-  driveSpaceData = driveSpaceData.filter(
-    (item) => item.server_name !== "Hestia" && item.server_name !== "Urania"
-  );
-
-  driveSpaceData.sort((a, b) => {
-    return (
-      a.server_name.localeCompare(b.server_name) ||
-      a.server_location.localeCompare(b.server_location)
-    );
-  });
+  driveSpaceData = driveSpaceData
+    .filter(
+      (item) =>
+        item.server_name !== "Hestia" &&
+        item.server_name !== "Urania" &&
+        item.server_name !== "kbo"
+    )
+    .sort((a, b) => {
+      return (
+        a.server_name.localeCompare(b.server_name) ||
+        a.server_location.localeCompare(b.server_location)
+      );
+    });
 
   res.render("index", { title: "Drive Space", driveSpaceData });
 });
