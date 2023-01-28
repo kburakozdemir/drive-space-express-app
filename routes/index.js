@@ -20,7 +20,11 @@ const options = {
 router.get("/", async (req, res, next) => {
   const fetchAPI = await fetch(url, options);
   const fetchAPIResponse = await fetchAPI.json();
-  const driveSpaceData = fetchAPIResponse.server_space_latest_data;
+  let driveSpaceData = fetchAPIResponse.server_space_latest_data;
+
+  driveSpaceData = driveSpaceData.filter(
+    (item) => item.server_name !== "Hestia" && item.server_name !== "Urania"
+  );
 
   driveSpaceData.sort((a, b) => {
     return (
