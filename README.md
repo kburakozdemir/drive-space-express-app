@@ -5,7 +5,7 @@ Node.js, Express hosted on free tier Azure web app and fetching data from Hasura
 Visit [this url](https://nodetestexpress.azurewebsites.net/) to see the app.
 
 ```bash
-# Node v18.18.0
+# Node v18.20.3
 npm install
 ```
 
