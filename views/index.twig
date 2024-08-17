@@ -24,10 +24,10 @@
 				<th class="text-capitalize">created</th>
 			</tr>
 			{% for drive in driveSpaceData %}
-				{% set driveSize = ((drive.size / (1024*1024)) | round(2, 'ceil')) | number_format(2) %}
-				{% set driveUsedSize = ((drive.used / (1024*1024)) | round(2, 'ceil')) | number_format(2) %}
-				{% set driveUsedSizePercent = (((drive.used / drive.size) * 100) | round(2, 'ceil')) | number_format(2) %}
-				{% set driveAvail = ((drive.avail / (1024*1024)) | round(2, 'ceil')) | number_format(2) %}
+				{% set drive_size = ((drive.size / (1024*1024))|round(2, 'ceil'))|number_format(2) %}
+				{% set drive_usedsize = ((drive.used / (1024*1024))|round(2, 'ceil'))|number_format(2) %}
+				{% set drive_usedsize_percent = (((drive.used / drive.size) * 100)|round(2, 'ceil'))|number_format(2) %}
+				{% set drive_avail = ((drive.avail / (1024*1024))|round(2, 'ceil'))|number_format(2) %}
 
 				<tr>
 					<td>{{ drive.id }}</td>
@@ -35,10 +35,10 @@
 					<td>{{ drive.server_location }}</td>
 					<td>{{ drive.fs }}</td>
 					<td>{{ drive.mount }}</td>
-					<td class="text-end">{{ driveSize }}</td>
-					<td class="text-end">{{ driveUsedSize }}</td>
-					<td class="text-end">{{ driveUsedSizePercent }}</td>
-					<td class="text-end">{{ driveAvail }}</td>
+					<td class="text-end">{{ drive_size }}</td>
+					<td class="text-end">{{ drive_usedsize }}</td>
+					<td class="text-end">{{ drive_usedsize_percent }}</td>
+					<td class="text-end">{{ drive_avail }}</td>
 					<td>{{ drive.created }}</td>
 				</tr>
 			{% endfor %}
